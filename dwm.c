@@ -273,6 +273,7 @@ static int xerror(Display *dpy, XErrorEvent *ee);
 static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
+static void cycle_tags(const Arg *arg);
 
 /* variables */
 static const char autostartblocksh[] = "autostart_blocking.sh";
@@ -2491,6 +2492,18 @@ zoom(const Arg *arg)
 		if (!c || !(c = nexttiled(c->next)))
 			return;
 	pop(c);
+}
+
+void cycle_tags(const Arg *arg) {
+  // function to swith to next tag.
+  Arg next_tag;
+  // generate next tag.
+  next_tag.ui = selmon->tagset[selmon->seltags] << 1;
+  if (!(next_tag.ui & TAGMASK)) {
+    // check if tag is valid else reset the tag.
+    next_tag.ui = 1;
+  }
+  view(&next_tag);
 }
 
 int

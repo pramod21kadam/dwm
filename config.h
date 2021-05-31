@@ -4,12 +4,12 @@
  * Appearance
  * Basic settings
  ****************************************************************************************/
-static const unsigned int borderpx  = 1;	// border pixel of windows
+static const unsigned int borderpx  = 0;	// border pixel of windows
 static const unsigned int gappx     = 0;	// gaps between windows
 static const unsigned int snap      = 32;	// snap pixel
 static const int showbar            = 1;	// 0 means no bar
-static const int vertpad            = 0;	// vertical padding of bar
-static const int sidepad            = 0;	// horizontal padding of bar
+static const int vertpad            = 10;	// vertical padding of bar
+static const int sidepad            = 10;	// horizontal padding of bar
 static const int topbar             = 1;	// 0 means bottom bar
 static const unsigned int gappih    = 10;	// horiz inner gap between windows
 static const unsigned int gappiv    = 10;	// vert inner gap between windows
@@ -37,7 +37,7 @@ static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
 static const char col_black[]       = "#000000";
-static const char col_gray[] 	    = "#525051";
+static const char col_gray[] 	    = "#8191a8";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -49,10 +49,12 @@ static const char *colors[][3]      = {
  * Tags and rules
  * class      instance    title       tags mask	isfloating   monitor
  ****************************************************************************************/
-static const char *tags[] = { "1", "2", "3", "", "" };
+static const char *tags[] = { "1", "2", "3", "4", "5" };
 static const Rule rules[] = {
-	{ .class = "Firefox",  .instance = NULL,      .title = NULL,       .tags = 1<<4,	.isfloating = 0,           -1 },
+		{"Firfox"},
+	 //	{ .class = "Firefox",  .instance = NULL,      .title = NULL,        1<<4,	.isfloating = 0,           -1 },
 };
+
 
 
 /****************************************************************************************
@@ -87,11 +89,18 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 // static const char *fonts[]          = { "monospace:size=14" };
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "tilix", NULL };
+// static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+
+static const char *dmenucmd[]		= { "/home/pramodkadam/.local/bin/mdmenu_run", NULL };		// dmemu
+static const char *search_home[]	= { "/home/pramodkadam/.local/bin/search_home", NULL };		// search
+static const char *powerctl[] 		= { "/home/pramodkadam/.local/bin/dwm_power", NULL };		// powerctl
+static const char *bluetooth[] 		= { "/home/pramodkadam/.local/bin/dwm_bluetooth", NULL }; 	// bluetooth
+static const char *connect_wifi[]	= { "/home/pramodkadam/.local/bin/connect_wifi" , NULL };	// wifi
+
+static const char *termcmd[] 		= { "tilix", NULL };						// terminal
 // Brightness
-static const char *brightness_up[]	= { "/home/pramodkadam/.local/bin/brightness.sh" ,	"up",	NULL };
-static const char *brightness_down[] 	= { "/home/pramodkadam/.local/bin/brightness.sh" ,	"down",	NULL };
+static const char *brightness_up[]	= { "/home/pramodkadam/.local/bin/brightness.sh" , "up", NULL };
+static const char *brightness_down[] 	= { "/home/pramodkadam/.local/bin/brightness.sh" , "down", NULL };
 // Volume
 static const char *volume_up[]		= { "/home/pramodkadam/.local/bin/volume.sh",		"up",	NULL};
 static const char *volume_down[]	= { "/home/pramodkadam/.local/bin/volume.sh",		"down", NULL};
@@ -113,33 +122,55 @@ static Key keys[] = {
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
+	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+
+	{ MODKEY,			XK_u,      incrgaps,       {.i = +1 } },
+	{ MODKEY|ShiftMask,		XK_u,      incrgaps,       {.i = -1 } },
+	{ MODKEY,			XK_i,      incrigaps,      {.i = +1 } },
+	{ MODKEY|ShiftMask,		XK_i,      incrigaps,      {.i = -1 } },
+	{ MODKEY|Mod5Mask,              XK_o,      incrogaps,      {.i = +1 } },
+	{ MODKEY|Mod5Mask|ShiftMask,    XK_o,      incrogaps,      {.i = -1 } },
+	{ MODKEY|Mod5Mask,              XK_6,      incrihgaps,     {.i = +1 } },
+	{ MODKEY|Mod5Mask|ShiftMask,    XK_6,      incrihgaps,     {.i = -1 } },
+	{ MODKEY|Mod5Mask,              XK_7,      incrivgaps,     {.i = +1 } },
+	{ MODKEY|Mod5Mask|ShiftMask,    XK_7,      incrivgaps,     {.i = -1 } },
+	{ MODKEY|Mod5Mask,              XK_8,      incrohgaps,     {.i = +1 } },
+	{ MODKEY|Mod5Mask|ShiftMask,    XK_8,      incrohgaps,     {.i = -1 } },
+	{ MODKEY,              XK_9,      incrovgaps,     {.i = +1 } },
+	{ MODKEY|ShiftMask,    XK_9,      incrovgaps,     {.i = -1 } },
+	{ MODKEY|Mod5Mask,              XK_0,      togglegaps,     {0} },
+	{ MODKEY|Mod5Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
+	
+	{ 0,				0x1008ff11,	spawn,		{.v = volume_down} 	},  // Volume up
+	{ 0,				0x1008ff13,	spawn,		{.v = volume_up}	},  // Volume down
+      	{ MODKEY|ShiftMask,		0xff52,		spawn,		{.v = brightness_up}	},  // Up Key
+      	{ MODKEY|ShiftMask,		0xff54,		spawn,		{.v = brightness_down}	},  // Down Key
+	{ MODKEY, 			XK_s,		spawn,		{.v = search_home}      },  // Dmenu search
+	{ MODKEY|ControlMask,		XK_d,		spawn,		{.v = powerctl}		},  // Dmenu power
+	{ MODKEY|ShiftMask,		XK_b,		spawn,		{.v = bluetooth}	},  // Dmenu bluetooth
+	{ MODKEY|ShiftMask,		XK_n,		spawn,		{.v = connect_wifi}	},  // Dmenu wifi
+	{MODKEY,			XK_c,		cycle_tags,	{.v = NULL}		},  // Cycle Through tags
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
 	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,		           8)
+//	TAGKEYS(                        XK_6,                      5)
+//	TAGKEYS(                        XK_7,                      6)
+//	TAGKEYS(                        XK_8,                      7)
+//	TAGKEYS(                        XK_9,		           8)
 	{ MODKEY|ShiftMask,             XK_q,		quit,           {0} },
-	{ 0,				0x1008ff11,	spawn,	{.v = volume_down} 	},
-	{ 0,				0x1008ff13,	spawn,	{.v = volume_up}	},
-      	{ MODKEY|ShiftMask,		0xff52,		spawn,	{.v = brightness_up}	},  // Up Key
-      	{ MODKEY|ShiftMask,		0xff54,		spawn,	{.v = brightness_down}	},  // Down Key
-	{ MODKEY|ShiftMask,         	XK_f,        	togglefloating, {0} },
 };
 
 /****************************************************************************************
