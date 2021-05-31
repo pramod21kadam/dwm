@@ -160,7 +160,8 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,		XK_d,		spawn,		{.v = powerctl}		},  // Dmenu power
 	{ MODKEY|ShiftMask,		XK_b,		spawn,		{.v = bluetooth}	},  // Dmenu bluetooth
 	{ MODKEY|ShiftMask,		XK_n,		spawn,		{.v = connect_wifi}	},  // Dmenu wifi
-	{MODKEY,			XK_c,		cycle_tags,	{.v = NULL}		},  // Cycle Through tags
+	{ MODKEY,			XK_c,		cycle_tags,	{.i = +1}		},  // Cycle Through tags
+	{ MODKEY|ControlMask,		XK_c,		cycle_tags,	{.i = -1}		},  // Cycle Through tags
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)

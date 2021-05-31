@@ -2497,13 +2497,20 @@ zoom(const Arg *arg)
 void cycle_tags(const Arg *arg) {
   // function to swith to next tag.
   Arg next_tag;
-  // generate next tag.
-  next_tag.ui = selmon->tagset[selmon->seltags] << 1;
-  if (!(next_tag.ui & TAGMASK)) {
-    // check if tag is valid else reset the tag.
-    next_tag.ui = 1;
+  if(arg->i == 1){
+	  // generate next tag.
+	  next_tag.ui = selmon->tagset[selmon->seltags] << 1;
+	  if (!(next_tag.ui & TAGMASK)){	// check if tag is valid else reset the tag.
+	    next_tag.ui = 1;
+	  }
+	  view(&next_tag);
   }
-  view(&next_tag);
+  else if (arg->i == -1){
+	  next_tag.ui = selmon->tagset[selmon->seltags] >> 1;
+	  if (next_tag.ui == 0)	// check if tag is valid else reset the tag.
+	    next_tag.ui = 1<<LENGTH(tags)-1;
+	  view(&next_tag);
+  }
 }
 
 int
