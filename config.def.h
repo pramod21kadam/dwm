@@ -88,8 +88,8 @@ static const Layout layouts[] = {
  ****************************************************************************************/
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 // static const char *fonts[]          = { "monospace:size=14" };
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 // static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static char dmenumon[2] = "0"; 										/* component of dmenucmd, manipulated in spawn() */
 
 static const char *dmenucmd[]		= { "/home/pramodkadam/.local/bin/mdmenu_run", NULL };		// dmemu
 static const char *search_home[]	= { "/home/pramodkadam/.local/bin/search_home", NULL };		// search
@@ -98,12 +98,11 @@ static const char *bluetooth[] 		= { "/home/pramodkadam/.local/bin/dwm_bluetooth
 static const char *connect_wifi[]	= { "/home/pramodkadam/.local/bin/connect_wifi" , NULL };	// wifi
 
 static const char *termcmd[] 		= { "tilix", NULL };						// terminal
-// Brightness
-static const char *brightness_up[]	= { "/home/pramodkadam/.local/bin/brightness.sh" , "up", NULL };
-static const char *brightness_down[] 	= { "/home/pramodkadam/.local/bin/brightness.sh" , "down", NULL };
-// Volume
-static const char *volume_up[]		= { "/home/pramodkadam/.local/bin/volume.sh",		"up",	NULL};
-static const char *volume_down[]	= { "/home/pramodkadam/.local/bin/volume.sh",		"down", NULL};
+
+static const char *brightness_up[]	= { "/home/pramodkadam/.local/bin/brightness.sh" , "up", NULL };	// Brightness up 
+static const char *brightness_down[] 	= { "/home/pramodkadam/.local/bin/brightness.sh" , "down", NULL };	// Brightness down
+static const char *volume_up[]		= { "/home/pramodkadam/.local/bin/volume.sh",		"up",	NULL};	// Volume up
+static const char *volume_down[]	= { "/home/pramodkadam/.local/bin/volume.sh",		"down", NULL};	// Volume down
 
 
 /****************************************************************************************
@@ -111,15 +110,15 @@ static const char *volume_down[]	= { "/home/pramodkadam/.local/bin/volume.sh",		
  ****************************************************************************************/
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } 	},
+	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } 	},
+	{ MODKEY,                       XK_b,      togglebar,      {0} 			},
+	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } 		},
+	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } 		},
+	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } 		},
+	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } 		},
+	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} 	},
+	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} 	},
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
@@ -135,22 +134,22 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 
-	{ MODKEY,			XK_u,      incrgaps,       {.i = +1 } },
-	{ MODKEY|ShiftMask,		XK_u,      incrgaps,       {.i = -1 } },
-	{ MODKEY,			XK_i,      incrigaps,      {.i = +1 } },
-	{ MODKEY|ShiftMask,		XK_i,      incrigaps,      {.i = -1 } },
-	{ MODKEY|Mod5Mask,              XK_o,      incrogaps,      {.i = +1 } },
-	{ MODKEY|Mod5Mask|ShiftMask,    XK_o,      incrogaps,      {.i = -1 } },
-	{ MODKEY|Mod5Mask,              XK_6,      incrihgaps,     {.i = +1 } },
-	{ MODKEY|Mod5Mask|ShiftMask,    XK_6,      incrihgaps,     {.i = -1 } },
-	{ MODKEY|Mod5Mask,              XK_7,      incrivgaps,     {.i = +1 } },
-	{ MODKEY|Mod5Mask|ShiftMask,    XK_7,      incrivgaps,     {.i = -1 } },
-	{ MODKEY|Mod5Mask,              XK_8,      incrohgaps,     {.i = +1 } },
-	{ MODKEY|Mod5Mask|ShiftMask,    XK_8,      incrohgaps,     {.i = -1 } },
-	{ MODKEY,              XK_9,      incrovgaps,     {.i = +1 } },
-	{ MODKEY|ShiftMask,    XK_9,      incrovgaps,     {.i = -1 } },
-	{ MODKEY|Mod5Mask,              XK_0,      togglegaps,     {0} },
-	{ MODKEY|Mod5Mask|ShiftMask,    XK_0,      defaultgaps,    {0} },
+	{ MODKEY,			XK_u,		incrgaps,       {.i = +1 } },
+	{ MODKEY|ShiftMask,		XK_u,		incrgaps,       {.i = -1 } },
+	{ MODKEY,			XK_i,		incrigaps,      {.i = +1 } },
+	{ MODKEY|ShiftMask,		XK_i,      	incrigaps,      {.i = -1 } },
+	{ MODKEY|Mod5Mask,              XK_o,      	incrogaps,      {.i = +1 } },
+	{ MODKEY|Mod5Mask|ShiftMask,    XK_o,      	incrogaps,      {.i = -1 } },
+	{ MODKEY|Mod5Mask,              XK_6,      	incrihgaps,     {.i = +1 } },
+	{ MODKEY|Mod5Mask|ShiftMask,    XK_6,      	incrihgaps,     {.i = -1 } },
+	{ MODKEY|Mod5Mask,              XK_7,      	incrivgaps,     {.i = +1 } },
+	{ MODKEY|Mod5Mask|ShiftMask,    XK_7,      	incrivgaps,     {.i = -1 } },
+	{ MODKEY|Mod5Mask,              XK_8,      	incrohgaps,     {.i = +1 } },
+	{ MODKEY|Mod5Mask|ShiftMask,    XK_8,      	incrohgaps,     {.i = -1 } },
+	{ MODKEY,              		XK_9,   	incrovgaps,     {.i = +1 } },
+	{ MODKEY|ShiftMask,    		XK_9,	      	incrovgaps,     {.i = -1 } },
+	{ MODKEY|Mod5Mask,              XK_0,      	togglegaps,     {0} },
+	{ MODKEY|Mod5Mask|ShiftMask,    XK_0,      	defaultgaps,    {0} },
 	
 	{ 0,				0x1008ff11,	spawn,		{.v = volume_down} 	},  // Volume up
 	{ 0,				0x1008ff13,	spawn,		{.v = volume_up}	},  // Volume down
@@ -167,10 +166,6 @@ static Key keys[] = {
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
 	TAGKEYS(                        XK_5,                      4)
-//	TAGKEYS(                        XK_6,                      5)
-//	TAGKEYS(                        XK_7,                      6)
-//	TAGKEYS(                        XK_8,                      7)
-//	TAGKEYS(                        XK_9,		           8)
 	{ MODKEY|ShiftMask,             XK_q,		quit,           {0} },
 };
 
