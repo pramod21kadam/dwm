@@ -134,10 +134,10 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 
-	{ MODKEY,			XK_u,		incrgaps,       {.i = +1 } },
-	{ MODKEY|ShiftMask,		XK_u,		incrgaps,       {.i = -1 } },
-	{ MODKEY,			XK_i,		incrigaps,      {.i = +1 } },
-	{ MODKEY|ShiftMask,		XK_i,      	incrigaps,      {.i = -1 } },
+	{ MODKEY,                       XK_u,		incrgaps,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_u,		incrgaps,       {.i = -1 } },
+	{ MODKEY,                       XK_i,		incrigaps,      {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_i,      	incrigaps,      {.i = -1 } },
 	{ MODKEY|Mod5Mask,              XK_o,      	incrogaps,      {.i = +1 } },
 	{ MODKEY|Mod5Mask|ShiftMask,    XK_o,      	incrogaps,      {.i = -1 } },
 	{ MODKEY|Mod5Mask,              XK_6,      	incrihgaps,     {.i = +1 } },
@@ -146,20 +146,21 @@ static Key keys[] = {
 	{ MODKEY|Mod5Mask|ShiftMask,    XK_7,      	incrivgaps,     {.i = -1 } },
 	{ MODKEY|Mod5Mask,              XK_8,      	incrohgaps,     {.i = +1 } },
 	{ MODKEY|Mod5Mask|ShiftMask,    XK_8,      	incrohgaps,     {.i = -1 } },
-	{ MODKEY,              		XK_9,   	incrovgaps,     {.i = +1 } },
-	{ MODKEY|ShiftMask,    		XK_9,	      	incrovgaps,     {.i = -1 } },
+	{ MODKEY,                       XK_9,   	incrovgaps,     {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_9,	      	incrovgaps,     {.i = -1 } },
 	{ MODKEY|Mod5Mask,              XK_0,      	togglegaps,     {0} },
 	{ MODKEY|Mod5Mask|ShiftMask,    XK_0,      	defaultgaps,    {0} },
 	
-	{ 0,				0x1008ff11,	spawn,		{.v = volume_down} 	},  // Volume up
-	{ 0,				0x1008ff13,	spawn,		{.v = volume_up}	},  // Volume down
-      	{ MODKEY|ShiftMask,		0xff52,		spawn,		{.v = brightness_up}	},  // Up Key
-      	{ MODKEY|ShiftMask,		0xff54,		spawn,		{.v = brightness_down}	},  // Down Key
-	{ MODKEY, 			XK_s,		spawn,		{.v = search_home}      },  // Dmenu search
-	{ MODKEY|ControlMask,		XK_d,		spawn,		{.v = powerctl}		},  // Dmenu power
-	{ MODKEY|ShiftMask,		XK_b,		spawn,		{.v = bluetooth}	},  // Dmenu bluetooth
-	{ MODKEY|ShiftMask,		XK_n,		spawn,		{.v = connect_wifi}	},  // Dmenu wifi
-	{ MODKEY,			XK_c,		cycle_tags,	{.i = +1}		},  // Cycle Through tags
+	{ MODKEY|ControlMask,           XK_f,		toggle_fake_full_screen,		},
+	{ 0,                            0x1008ff11,	spawn,		{.v = volume_down} 	},  // Volume up
+	{ 0,                            0x1008ff13,	spawn,		{.v = volume_up}	},  // Volume down
+	{ MODKEY|ShiftMask,             0xff52,		spawn,		{.v = brightness_up}	},  // Up Key
+	{ MODKEY|ShiftMask,             0xff54,		spawn,		{.v = brightness_down}	},  // Down Key
+	{ MODKEY,                       XK_s,		spawn,		{.v = search_home}      },  // Dmenu search
+	{ MODKEY|ControlMask,           XK_d,		spawn,		{.v = powerctl}		},  // Dmenu power
+	{ MODKEY|ShiftMask,             XK_b,		spawn,		{.v = bluetooth}	},  // Dmenu bluetooth
+	{ MODKEY|ShiftMask,             XK_n,		spawn,		{.v = connect_wifi}	},  // Dmenu wifi
+	{ MODKEY,                       XK_c,		cycle_tags,	{.i = +1}		},  // Cycle Through tags
 	{ MODKEY|ControlMask,		XK_c,		cycle_tags,	{.i = -1}		},  // Cycle Through tags
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
