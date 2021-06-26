@@ -165,7 +165,6 @@ typedef struct {
 	int isfloating;
 	int monitor;
 } Rule;
-Bool isFakeFullScreen = False;
 
 /* function declarations */
 static void applyrules(Client *c);
