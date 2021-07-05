@@ -35,7 +35,7 @@ static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static const char col_cyan[]        = "#5d6195";
 static const char col_black[]       = "#000000";
 static const char col_gray[] 	    = "#8191a8";
 static const char *colors[][3]      = {
@@ -96,9 +96,9 @@ static const Layout layouts[] = {
 // static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static char dmenumon[2] = "0"; 										/* component of dmenucmd, manipulated in spawn() */
 
-static const char *dmenucmd[]		= { "/home/pramodkadam/.local/bin/mdmenu_run", NULL };		// dmemu
+static const char *dmenucmd[]		= { "/home/pramodkadam/.local/share/dwm/applauncher.sh", "applauncher" };		// dmemu
 static const char *search_home[]	= { "/home/pramodkadam/.local/bin/search_home", NULL };		// search
-static const char *powerctl[] 		= { "/home/pramodkadam/.local/bin/dwm_power", NULL };		// powerctl
+static const char *powerctl[] 		= { "/home/pramodkadam/.local/share/dwm/applauncher.sh", "power-menu" };		// powerctl
 static const char *bluetooth[] 		= { "/home/pramodkadam/.local/bin/dwm_bluetooth", NULL }; 	// bluetooth
 static const char *connect_wifi[]	= { "/home/pramodkadam/.local/bin/connect_wifi" , NULL };	// wifi
 
