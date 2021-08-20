@@ -1,5 +1,4 @@
 // #include <X11/XF86keysym.h>
-
 /****************************************************************************************
  * Appearance
  * Basic settings
@@ -21,8 +20,6 @@ static const int smartgaps          = 0;	// 1 means no outer gap when there is o
 /****************************************************************************************
  * Fonts
  ****************************************************************************************/
-// static const char *fonts[]          = { "monospace:size=14" };
-// static const char dmenufont[]       = "monospace:size=14";
 static const char *fonts[]		= { "FontAwesome:pixelsize=16:antialias=true:autohint=true" };
 static const char dmenufont[]		= "FontAwesome:pixelsize=16:antialias=true:autohint=true";
 
@@ -56,7 +53,7 @@ static Bool isFakeFullScreen = False;
  ****************************************************************************************/
 static const char *tags[] = { "1", "2", "3", "4", "5" };
 static const Rule rules[] = {
-		{"Firfox"},
+		{"No"},
 	 //	{ .class = "Firefox",  .instance = NULL,      .title = NULL,        1<<4,	.isfloating = 0,           -1 },
 };
 
@@ -73,6 +70,8 @@ static const Layout layouts[] = {
 	{ "T",      tile },		// first entry is default */
 	{ "F",      NULL },		// no layout function means floating behavior */
 	{ "M",      monocle },
+	{ "|M|",      centeredmaster },
+	{ ">M>",      centeredfloatingmaster },
 };
 
 
@@ -92,17 +91,15 @@ static const Layout layouts[] = {
  * Helper for spawning shell commands in the pre dwm-5.0 fashion
  ****************************************************************************************/
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
-// static const char *fonts[]          = { "monospace:size=14" };
-// static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static char dmenumon[2] = "0"; 										/* component of dmenucmd, manipulated in spawn() */
 
-static const char *dmenucmd[]		= { "/home/pramodkadam/.local/share/dwm/applauncher.sh", "applauncher" };		// dmemu
-static const char *search_home[]	= { "/home/pramodkadam/.local/bin/search_home", NULL };		// search
-static const char *powerctl[] 		= { "/home/pramodkadam/.local/share/dwm/applauncher.sh", "power-menu" };		// powerctl
+static const char *dmenucmd[]		= { "/home/pramodkadam/.local/share/dwm/launcher", "applauncher" };		// dmemu
+static const char *search_home[]	= { "/home/pramodkadam/.local/share/dwm/launcher", "search" };		// search
+static const char *powerctl[] 		= { "/home/pramodkadam/.local/share/dwm/launcher", "power-menu" };		// powerctl
 static const char *bluetooth[] 		= { "/home/pramodkadam/.local/bin/dwm_bluetooth", NULL }; 	// bluetooth
 static const char *connect_wifi[]	= { "/home/pramodkadam/.local/bin/connect_wifi" , NULL };	// wifi
 
-static const char *termcmd[] 		= { "tilix", NULL };						// terminal
+static const char *termcmd[] 		= { "/home/pramodkadam/.local/share/dwm/launcher", "terminal" };						// terminal
 
 static const char *brightness_up[]	= { "/home/pramodkadam/.local/bin/brightness.sh" , "up", NULL };	// Brightness up 
 static const char *brightness_down[] 	= { "/home/pramodkadam/.local/bin/brightness.sh" , "down", NULL };	// Brightness down
@@ -129,6 +126,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
@@ -139,8 +138,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 
-	{ MODKEY,                       XK_u,		incrgaps,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_u,		incrgaps,       {.i = -1 } },
+//	{ MODKEY,                       XK_u,		incrgaps,       {.i = +1 } },
+/*	{ MODKEY|ShiftMask,             XK_u,		incrgaps,       {.i = -1 } },
 	{ MODKEY,                       XK_i,		incrigaps,      {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_i,      	incrigaps,      {.i = -1 } },
 	{ MODKEY|Mod5Mask,              XK_o,      	incrogaps,      {.i = +1 } },
@@ -155,7 +154,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_9,	      	incrovgaps,     {.i = -1 } },
 	{ MODKEY|Mod5Mask,              XK_0,      	togglegaps,     {0} },
 	{ MODKEY|Mod5Mask|ShiftMask,    XK_0,      	defaultgaps,    {0} },
-	
+*/	
 	{ MODKEY|ControlMask,           XK_f,		toggle_fake_full_screen,		},
 	{ 0,                            0x1008ff11,	spawn,		{.v = volume_down} 	},  // Volume up
 	{ 0,                            0x1008ff13,	spawn,		{.v = volume_up}	},  // Volume down
@@ -165,14 +164,17 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,           XK_d,		spawn,		{.v = powerctl}		},  // Dmenu power
 	{ MODKEY|ShiftMask,             XK_b,		spawn,		{.v = bluetooth}	},  // Dmenu bluetooth
 	{ MODKEY|ShiftMask,             XK_n,		spawn,		{.v = connect_wifi}	},  // Dmenu wifi
-	{ MODKEY,                       XK_c,		cycle_tags,	{.i = +1}		},  // Cycle Through tags
-	{ MODKEY|ControlMask,		XK_c,		cycle_tags,	{.i = -1}		},  // Cycle Through tags
+
+	{ MODKEY|ControlMask,           XK_l,		cycle_tags,	{.i = +1}		},  // Cycle Through tags
+	{ MODKEY|ControlMask,		XK_h,		cycle_tags,	{.i = -1}		},  // Cycle Through tags
+	
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
 	TAGKEYS(                        XK_4,                      3)
 	TAGKEYS(                        XK_5,                      4)
 	{ MODKEY|ShiftMask,             XK_q,		quit,           {0} },
+	{ MODKEY,                       XK_u,      focusurgent,    {0} },
 };
 
 /****************************************************************************************
@@ -214,5 +216,6 @@ static IPCCommand ipccommands[] = {
   IPCCOMMAND(  togglefloating,      1,      {ARG_TYPE_NONE}   ),
   IPCCOMMAND(  setmfact,            1,      {ARG_TYPE_FLOAT}  ),
   IPCCOMMAND(  setlayoutsafe,       1,      {ARG_TYPE_PTR}    ),
-  IPCCOMMAND(  quit,                1,      {ARG_TYPE_NONE}   )
+  IPCCOMMAND(  quit,                1,      {ARG_TYPE_NONE}   ),
+  IPCCOMMAND(  togglebar,			1,      {ARG_TYPE_NONE}   )
 };
